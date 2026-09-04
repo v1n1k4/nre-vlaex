@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAEX // High-Performance Timetable Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+    <!-- Floating Dock Header (Unlumen UI Dock) -->
+    <header>
+        <div class="brand-container">
+            <div class="bars" id="menuToggle" aria-label="Abrir Menu">
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+            </div>
+            <a href="index.html" class="brand-logo">
+                CLAEX<span>.</span>
+            </a>
+            <span class="brand-telemetry">[AUTOMAÇÃO v3.0]</span>
+        </div>
+
+        <nav class="dock-links">
+            <a href="index.html" class="dock-link active">Início</a>
+            <a href="listar_sala.html" class="dock-link">Salas</a>
+            <a href="grade.html" class="dock-link">Grade</a>
+            <a href="tabela_cadastros.html" class="dock-link">Professores</a>
+            <a href="#como-funciona" class="dock-link">Como Funciona</a>
+            <a href="#equipe" class="dock-link">Pit Crew</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="form_login.html" class="btn-ghost">Login</a>
+            <a href="form_cadastro.html" class="btn-neon">Comece Já</a>
+        </div>
+    </header>
+
+    <!-- Side Drawer Menu (Mobile & Quick Access) -->
+    <aside id="side-menu">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="brand-logo">CLAEX<span>.</span></div>
+            <button class="close-menu btn-ghost" style="padding: 6px 12px; font-size: 1.2rem;">✕</button>
+        </div>
+        <div class="telemetry-tag">Navegação Rápida</div>
+        <a href="index.html" class="side-link">🏠 Início</a>
+        <a href="form_login.html?tipo=entrar" class="side-link">🔑 Acesso / Login</a>
+        <a href="listar_sala.html" class="side-link">📚 Salas & Turmas</a>
+        <a href="form_nova_sala.html" class="side-link">➕ Criar Nova Sala</a>
+        <a href="config_sala.html" class="side-link">⚙️ Configurações de Sala</a>
+        <a href="tabela_cadastros.html" class="side-link">👥 Painel de Professores</a>
+        <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-glass);">
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">
+                CLAEX ENGINE // 2026<br>
+                SPRINT READY // ZERO CONFLICTS
+            </p>
+        </div>
+    </aside>
+    <div class="menu-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999;"></div>
+
+    <main>
+        <!-- Hero Section (Lando Norris Split Composition) -->
+        <section id="capa_index" class="hero-section">
+            <div class="hero-content">
+                <div class="telemetry-tag">[MOTOR MATRICIAL // TEMPO REAL]</div>
+                <h1 class="hero-title">
+                    Organizar grades horárias <br>
+                    <span class="highlight">nunca foi tão rápido.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    O CLAEX unifica a disponibilidade de professores entre diferentes instituições de ensino, 
+                    eliminando choques de horários e automatizando a montagem da grade com precisão milimétrica.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="form_cadastro.html" class="btn-neon">
+                        Começar Agora <span>→</span>
+                    </a>
+                    <a href="listar_sala.html" class="btn-ghost">
+                        Ver Salas Cadastradas
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div>
+                        <div class="hero-stat-number">0<span>%</span></div>
+                        <div class="hero-stat-label">Conflitos de Horário</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">&lt; 1<span>s</span></div>
+                        <div class="hero-stat-label">Tempo de Processamento</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">100<span>%</span></div>
+                        <div class="hero-stat-label">Sincronização Multi-Escolas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Interactive Schedule Simulator Widget (Unlumen UI Component) -->
+            <div class="hero-visual">
+                <div class="sim-container spotlight-card" id="claex-interactive-simulator">
+                    <div class="sim-header">
+                        <div class="sim-title">
+                            <span style="color: var(--neon-lime);">●</span> SIMULADOR DE CONFLITOS
+                        </div>
+                        <span class="telemetry-tag" style="margin: 0;">INTERATIVO</span>
+                    </div>
+
+                    <p style="font-size: 0.8rem; margin-bottom: 12px; color: var(--text-secondary);">
+                        Clique nos horários abaixo para simular ou resolver choques de professores entre escolas:
+                    </p>
+
+                    <div class="sim-grid">
+                        <div class="sim-slot conflict" data-day="Segunda" data-time="08:00" data-subject="Matemática">
+                            <span class="slot-badge">CHOQUE!</span>
+                            Matemática
+                            <small style="display: block; font-size: 0.65rem; color: #ff9999;">Prof. em 2 escolas</small>
+                        </div>
+                        <div class="sim-slot resolved" data-day="Segunda" data-time="08:50" data-subject="Física">
+                            <span class="slot-badge">OK</span>
+                            Física
+                            <small style="display: block; font-size: 0.65rem; color: #ccff66;">Confirmado</small>
+                        </div>
+                        <div class="sim-slot" data-day="Terça" data-time="08:00" data-subject="Química">
+                            <span class="slot-badge">LIVRE</span>
+                            Química
+                            <small style="display: block; font-size: 0.65rem; color: var(--text-muted);">Disponível</small>
+                        </div>
+                        <div class="sim-slot resolved" data-day="Terça" data-time="08:50" data-subject="História">
+                            <span class="slot-badge">OK</span>
+                            História
+                            <small style="display: block; font-size: 0.65rem; color: #ccff66;">Confirmado</small>
+                        </div>
+                        <div class="sim-slot conflict" data-day="Quarta" data-time="08:00" data-subject="Biologia">
+                            <span class="slot-badge">CHOQUE!</span>
+                            Biologia
+                            <small style="display: block; font-size: 0.65rem; color: #ff9999;">Sobreposição</small>
+                        </div>
+                        <div class="sim-slot resolved" data-day="Quarta" data-time="08:50" data-subject="Português">
+                            <span class="slot-badge">OK</span>
+                            Português
+                            <small style="display: block; font-size: 0.65rem; color: #ccff66;">Confirmado</small>
+                        </div>
+                    </div>
+
+                    <div class="sim-telemetry">
+                        <div id="sim-telemetry-status" style="font-weight: 700; margin-bottom: 4px;">ALERTA: 2 CHOQUES DETECTADOS</div>
+                        <div id="sim-telemetry-log" style="color: var(--text-secondary); font-size: 0.68rem;">
+                            [TELEMETRIA] Detectada alocação simultânea de docentes na Escola Matriz e Polo Secundário.
+                        </div>
+                    </div>
+
+                    <button id="sim-solve-btn" class="btn-neon" style="width: 100%; font-size: 0.82rem; padding: 8px;">
+                        ⚡ Executar Otimização Automática
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kinetic Ticker Ribbon (Racing Marquee) -->
+        <div class="ticker-ribbon-wrapper">
+            <div class="ticker-track">
+                <span class="ticker-item"><span class="dot-neon"></span> CLAEX RACING ENGINE</span>
+                <span class="ticker-item"><span class="dot-neon"></span> ZERO CONFLITOS DE HORÁRIO</span>
+                <span class="ticker-item"><span class="dot-neon"></span> SINCRONIZAÇÃO MULTI-INSTITUIÇÃO</span>
+                <span class="ticker-item"><span class="dot-neon"></span> SPRING BOOT HIGH-THROUGHPUT</span>
+                <span class="ticker-item"><span class="dot-neon"></span> DISPONIBILIDADE EM TEMPO REAL</span>
+                <span class="ticker-item"><span class="dot-neon"></span> DISTRIBUIÇÃO INTELIGENTE DE CARGA</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="ticker-item"><span class="dot-neon"></span> CLAEX RACING ENGINE</span>
+                <span class="ticker-item"><span class="dot-neon"></span> ZERO CONFLITOS DE HORÁRIO</span>
+                <span class="ticker-item"><span class="dot-neon"></span> SINCRONIZAÇÃO MULTI-INSTITUIÇÃO</span>
+                <span class="ticker-item"><span class="dot-neon"></span> SPRING BOOT HIGH-THROUGHPUT</span>
+                <span class="ticker-item"><span class="dot-neon"></span> DISPONIBILIDADE EM TEMPO REAL</span>
+                <span class="ticker-item"><span class="dot-neon"></span> DISTRIBUIÇÃO INTELIGENTE DE CARGA</span>
+            </div>
+        </div>
+
+        <!-- Bento Grid Section: Features (Unlumen UI Primitives) -->
+        <section class="section-wrapper" id="recursos">
+            <div class="section-header">
+                <div class="telemetry-tag">[ARQUITETURA & RECURSOS]</div>
+                <h2 class="section-title">Engenharia Desenvolvida Para Escalar</h2>
+                <p class="section-subtitle">
+                    Uma infraestrutura completa projetada para eliminar o estresse de semanas de trabalho manual na montagem da grade escolar.
+                </p>
+            </div>
+
+            <div class="bento-grid">
+                <!-- Bento Card 1 -->
+                <div class="spotlight-card col-span-8">
+                    <div class="telemetry-tag">DIFERENCIAL EXCLUSIVO</div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 12px;">Integração Cruzada Multi-Escolas</h3>
+                    <p style="margin-bottom: 20px;">
+                        Quando um professor atua em mais de uma instituição de ensino parceira, o sistema verifica 
+                        automaticamente sua disponibilidade em rede centralizada. Se ele estiver alocado na Escola A às 08:00, 
+                        o CLAEX bloqueia automaticamente esse período na Escola B, prevenindo faltas e confusões antes mesmo das aulas começarem.
+                    </p>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <span class="telemetry-tag" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--text-pure);">⚡ Validação de Deslocamento</span>
+                        <span class="telemetry-tag" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--text-pure);">📍 Checagem de Carga Semanal</span>
+                    </div>
+                </div>
+
+                <!-- Bento Card 2 -->
+                <div class="spotlight-card col-span-4">
+                    <div class="telemetry-tag">AUTONOMIA TOTAL</div>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Gestão de Conflitos</h3>
+                    <p>
+                        Avisos visuais imediatos ao gestor e opções de trocas de horários e matérias diretamente pelo painel administrativo, sem planilhas desatualizadas.
+                    </p>
+                    <div style="margin-top: 24px; font-family: var(--font-mono); font-size: 1.8rem; color: var(--neon-lime); font-weight: 800;">
+                        100% DIGITAL
+                    </div>
+                </div>
+
+                <!-- Bento Card 3 -->
+                <div class="spotlight-card col-span-4">
+                    <div class="telemetry-tag">AGILIDADE MÁXIMA</div>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Otimização de Tempo</h3>
+                    <p>
+                        De semanas a minutos. O algoritmo analisa horários livres, preferências pedagógicas e limites de janelas entre aulas automaticamente.
+                    </p>
+                </div>
+
+                <!-- Bento Card 4 -->
+                <div class="spotlight-card col-span-8">
+                    <div class="telemetry-tag">RELATÓRIOS & EXPORTAÇÃO</div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 12px;">Visão Completa por Sala, Turma e Docente</h3>
+                    <p>
+                        Acesse grades personalizadas em tempo real. Cada professor consulta apenas seus horários, 
+                        enquanto a direção tem a visão panorâmica de todas as salas simultaneamente.
+                    </p>
+                    <div style="margin-top: 16px;">
+                        <a href="listar_sala.html" class="btn-neon" style="font-size: 0.82rem; padding: 8px 18px;">
+                            Explorar Matriz de Salas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Como Funciona / Laps Timeline Section -->
+        <section class="section-wrapper" id="como-funciona">
+            <div class="section-header">
+                <div class="telemetry-tag">[FLUXO OPERACIONAL]</div>
+                <h2 class="section-title">Como o CLAEX Funciona</h2>
+                <p class="section-subtitle">
+                    Três etapas simples para transformar dados em uma grade horária perfeita e sem atritos.
+                </p>
+            </div>
+
+            <div class="lap-timeline">
+                <div class="lap-card spotlight-card">
+                    <div class="lap-badge">LAP 01 // INPUT</div>
+                    <h3>Cadastro dos Recursos</h3>
+                    <p>
+                        Cadastre as instituições, salas de aula, professores e suas disponibilidades semanais, além da duração das aulas e intervalos.
+                    </p>
+                </div>
+
+                <div class="lap-card spotlight-card">
+                    <div class="lap-badge">LAP 02 // PARÂMETROS</div>
+                    <h3>Definição das Regras</h3>
+                    <p>
+                        Configure a carga de matérias por turma, intervalos pedagógicos, quantidade máxima de aulas seguidas e restrições de cada docente.
+                    </p>
+                </div>
+
+                <div class="lap-card spotlight-card">
+                    <div class="lap-badge">LAP 03 // RESOLUÇÃO</div>
+                    <h3>Geração & Distribuição</h3>
+                    <p>
+                        O motor do CLAEX processa todas as variáveis em paralelo, cruzando as disponibilidades e gerando uma grade limpa, harmoniosa e livre de conflitos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipe / Pit Crew (Lando Norris Dossier Styling) -->
+        <section class="section-wrapper" id="equipe">
+            <div class="section-header">
+                <div class="telemetry-tag">[PIT CREW // ENGENHARIA]</div>
+                <h2 class="section-title">Desenvolvedores do Projeto</h2>
+                <p class="section-subtitle">
+                    A equipe responsável pela arquitetura, inteligência back-end em Spring Boot e experiência front-end de alta octanagem.
+                </p>
+            </div>
+
+            <div class="team-grid">
+                <!-- Daniel -->
+                <article class="team-dossier spotlight-card">
+                    <div class="dossier-image-wrap">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQFvJd5dKxhTJQ/profile-displayphoto-shrink_200_200/B4DZYvrVA6G4AY-/0/1744556613033?e=2147483647&v=beta&t=vcfFsJG-aaz67lDVg82S-_WRuBQFVQYsU5vZ6jkMgZw" alt="Daniel">
+                        <div class="dossier-badge">BACK-END LEAD</div>
+                    </div>
+                    <div class="dossier-body">
+                        <div>
+                            <h3 class="dossier-name">Daniel</h3>
+                            <div class="dossier-role">Dev Back-End</div>
+                            <p class="dossier-desc">
+                                Responsável pela arquitetura e implementações robustas de microsserviços e APIs construídas em Java e Spring Boot.
+                            </p>
+                        </div>
+                        <a href="https://br.linkedin.com/in/daniel-da-silva-pereira-2ab525352?trk=people-guest_people_search-card" target="_blank" rel="noopener noreferrer" class="btn-linkedin">
+                            <span>Conectar no LinkedIn</span> ↗
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Vini -->
+                <article class="team-dossier spotlight-card">
+                    <div class="dossier-image-wrap">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQE3d-M5KCrZ7w/profile-displayphoto-scale_200_200/B4DZu6Xd1tJsAY-/0/1768358273500?e=2147483647&v=beta&t=zH5JQG4Bs_e5jcaTZgcfZoSPCH6A9hv0Y8dwCVBVhKM" alt="Vinicius">
+                        <div class="dossier-badge">FULL-STACK & UI</div>
+                    </div>
+                    <div class="dossier-body">
+                        <div>
+                            <h3 class="dossier-name">Vini</h3>
+                            <div class="dossier-role">Dev Front-End & Back-End</div>
+                            <p class="dossier-desc">
+                                Responsável pelo design de alta performance do Front-End, arquitetura interativa e integração com as APIs Java e Spring Boot.
+                            </p>
+                        </div>
+                        <a href="https://br.linkedin.com/in/vinicius-castilho-39153b358?trk=people-guest_people_search-card" target="_blank" rel="noopener noreferrer" class="btn-linkedin">
+                            <span>Conectar no LinkedIn</span> ↗
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Samuel -->
+                <article class="team-dossier spotlight-card">
+                    <div class="dossier-image-wrap">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQELYFLLYv5zvg/profile-displayphoto-shrink_200_200/B4DZZEmjjmHIAY-/0/1744907680442?e=2147483647&v=beta&t=vQNpdqaQsttS8XcYOIKfv_qqOFew6dLcWXFLRMyB3oA" alt="Samuel">
+                        <div class="dossier-badge">FULL-STACK DEV</div>
+                    </div>
+                    <div class="dossier-body">
+                        <div>
+                            <h3 class="dossier-name">Samuel</h3>
+                            <div class="dossier-role">Desenvolvedor Full-Stack</div>
+                            <p class="dossier-desc">
+                                Colaborando na produção geral do projeto, estruturação de fluxos de dados e aperfeiçoamento da experiência do usuário.
+                            </p>
+                        </div>
+                        <a href="https://br.linkedin.com/in/samuel-arthur-barbosa-50ba37359" target="_blank" rel="noopener noreferrer" class="btn-linkedin">
+                            <span>Conectar no LinkedIn</span> ↗
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Telemetry Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">CLAEX<span>.</span></div>
+                <p style="font-size: 0.88rem; max-width: 320px; margin-top: 10px; color: var(--text-secondary);">
+                    Plataforma de alta velocidade para geração e sincronização de grades horárias multi-institucionais.
+                </p>
+                <div style="margin-top: 16px;">
+                    <div class="footer-status">STATUS: MOTOR OPERACIONAL (100%)</div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="index.html">Início</a>
+                    <a href="listar_sala.html">Salas</a>
+                    <a href="grade.html">Grade de Horários</a>
+                    <a href="tabela_cadastros.html">Tabela de Professores</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Acesso</h4>
+                    <a href="form_login.html">Login</a>
+                    <a href="form_cadastro.html">Cadastro</a>
+                    <a href="form_nova_sala.html">Nova Sala</a>
+                    <a href="config_sala.html">Configuração</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Sobre</h4>
+                    <a href="#como-funciona">Como Funciona</a>
+                    <a href="#equipe">Pit Crew</a>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Termos</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>&copy; 2026 CLAEX RACING ENGINE. Todos os direitos reservados.</div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                SYS // SPEED & ACCURACY // BUILT WITH JAVA & SPRING BOOT
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts: WebGL Particle Accelerator & Unlumen UI Effects -->
+    <script src="js/webgl-background.js"></script>
+    <script src="js/unlumen-effects.js"></script>
+</body>
+</html>

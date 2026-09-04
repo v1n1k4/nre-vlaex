@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAEX // Grade Horária Matriz</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Floating Dock Header -->
+    <header>
+        <div class="brand-container">
+            <div class="bars" id="menuToggle" aria-label="Abrir Menu">
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+            </div>
+            <a href="index.html" class="brand-logo">
+                CLAEX<span>.</span>
+            </a>
+            <span class="brand-telemetry">[MATRIZ // GRADE ATIVA]</span>
+        </div>
+
+        <nav class="dock-links">
+            <a href="index.html" class="dock-link">Início</a>
+            <a href="listar_sala.html" class="dock-link">Salas</a>
+            <a href="grade.html" class="dock-link active">Grade</a>
+            <a href="tabela_cadastros.html" class="dock-link">Professores</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="listar_sala.html">
+                <img style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--neon-lime); object-fit: cover;" 
+                     src="https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/197/2024/12/centro-paula-souza.jpg" 
+                     alt="Centro Paula Souza">
+            </a>
+        </div>
+    </header>
+
+    <!-- Side Drawer Menu -->
+    <aside id="side-menu">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="brand-logo">CLAEX<span>.</span></div>
+            <button class="close-menu btn-ghost" style="padding: 6px 12px; font-size: 1.2rem;">✕</button>
+        </div>
+        <div class="telemetry-tag">Navegação Rápida</div>
+        <a href="index.html" class="side-link">🏠 Início</a>
+        <a href="form_login.html?tipo=entrar" class="side-link">🔑 Acesso / Login</a>
+        <a href="listar_sala.html" class="side-link">📚 Salas & Turmas</a>
+        <a href="form_nova_sala.html" class="side-link">➕ Criar Nova Sala</a>
+        <a href="config_sala.html" class="side-link">⚙️ Configurações de Sala</a>
+        <a href="tabela_cadastros.html" class="side-link">👥 Painel de Professores</a>
+    </aside>
+    <div class="menu-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999;"></div>
+
+    <section id="painel">
+        <img src="https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/197/2024/12/centro-paula-souza.jpg" alt="Instituição">
+        <article>
+            <div class="telemetry-tag" style="margin-bottom: 6px;">UNIDADE CONECTADA</div>
+            <h1>Centro Paula Souza</h1>
+            <p style="color: var(--text-secondary);">Visualização e gerenciamento de distribuição de aulas</p>
+        </article>
+    </section>
+
+    <main>
+        <div class="link_nova_sala" style="margin-top: 10px; margin-bottom: 24px;">
+            <div>
+                <div class="telemetry-tag" style="margin-bottom: 4px;">TURMA / AMBIENTE SELECIONADO</div>
+                <h2 id="nome_sala" style="color: var(--neon-lime); font-size: 2rem;">Carregando Sala...</h2>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <a href="config_sala.html" id="link_alterar_sala" class="btn-ghost">
+                    ⚙️ Configurações da Sala
+                </a>
+                <button class="btn-ghost" onclick="alert('Essa função está em desenvolvimento: O motor gerador recalculará a grade automaticamente.');">
+                    ⚡ Alterar Grade
+                </button>
+                <button class="btn-ghost" onclick="apagarSala()" style="color: #ff5555; border-color: rgba(255, 59, 48, 0.4);" title="Excluir Sala">
+                    🗑️ Excluir
+                </button>
+            </div>
+        </div>
+
+        <section id="grade_aula">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 90px;">HORÁRIO</th>
+                        <th>SEGUNDA</th>
+                        <th>TERÇA</th>
+                        <th>QUARTA</th>
+                        <th>QUINTA</th>
+                        <th>SEXTA</th>
+                        <th>SÁBADO</th>
+                        <th>DOMINGO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>08:00</td>
+                        <td>Português</td>
+                        <td>Matemática</td>
+                        <td>Matemática</td>
+                        <td>Matemática</td>
+                        <td>História</td>
+                        <td>Ciência</td>
+                        <td>Ciência</td>
+                    </tr>
+                    <tr>
+                        <td>08:50</td>
+                        <td>Português</td>
+                        <td>Matemática</td>
+                        <td>Matemática</td>
+                        <td>Matemática</td>
+                        <td>História</td>
+                        <td>Ciência</td>
+                        <td>Ciência</td>
+                    </tr>
+                    <tr>
+                        <td>10:00</td>
+                        <td>Português</td>
+                        <td>Matemática</td>
+                        <td>Matemática</td>
+                        <td>Matemática</td>
+                        <td>História</td>
+                        <td>Ciência</td>
+                        <td>Ciência</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">CLAEX<span>.</span></div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="index.html">Início</a>
+                    <a href="listar_sala.html">Salas</a>
+                    <a href="grade.html">Grade de Horários</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 CLAEX. Todos os direitos reservados.</div>
+            <div class="footer-status">ONLINE // MATRIX RENDERED</div>
+        </div>
+    </footer>
+
+    <script>
+        async function injetarSalaNaGrade(){
+            const paramns = new URLSearchParams(window.location.search);
+            const id = paramns.get('id');
+            if (!id) {
+                document.getElementById("nome_sala").textContent = "Sala 1";
+                return;
+            }
+
+            try {
+                const buscarSala = await fetch(`https://lolooo-production.up.railway.app/salas/${id}`);
+                const sala = await buscarSala.json();
+
+                let a = document.getElementById("link_alterar_sala");
+                let h2 = document.getElementById("nome_sala");
+
+                if (sala && sala.nome_sala) {
+                    a.href = `config_sala.html?id=${sala.id_sala}`;
+                    h2.textContent = sala.nome_sala;
+                } else {
+                    h2.textContent = `Sala #${id}`;
+                }
+            } catch(e) {
+                console.error("Erro ao buscar sala:", e);
+                document.getElementById("nome_sala").textContent = `Sala #${id}`;
+            }
+        };
+
+        injetarSalaNaGrade();
+
+        async function apagarSala(){
+            const paramns = new URLSearchParams(window.location.search);
+            const id = paramns.get('id');
+            if (!id) {
+                alert("ID da sala não especificado.");
+                return;
+            }
+
+            if(confirm("Deseja realmente deletar esta sala permanentemente?")){
+                try {
+                    const response = await fetch(`https://lolooo-production.up.railway.app/salas/${id}`, {method: "DELETE"});
+                    if(response.ok){
+                        alert("Sala deletada com sucesso!");
+                        window.location.href = "listar_sala.html";
+                    } else {
+                        alert("Não foi possível excluir a sala.");
+                    }
+                } catch(e) {
+                    alert("Erro ao conectar com o servidor.");
+                }
+            }
+        }
+    </script>
+    <script src="js/webgl-background.js"></script>
+    <script src="js/unlumen-effects.js"></script>
+</body>
+</html>
