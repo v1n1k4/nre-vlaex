@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAEX // Criar Nova Sala</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+        .aulas {
+            background: var(--bg-carbon);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
+            padding: 18px;
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 600px) {
+            .aulas { grid-template-columns: 1fr; }
+        }
+        .btn-add-materia {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(210, 255, 0, 0.1);
+            color: var(--neon-lime);
+            border: 1px solid var(--border-lime);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        .btn-add-materia:hover {
+            background: var(--neon-lime);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Dock Header -->
+    <header>
+        <div class="brand-container">
+            <div class="bars" id="menuToggle" aria-label="Abrir Menu">
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+            </div>
+            <a href="index.html" class="brand-logo">
+                CLAEX<span>.</span>
+            </a>
+            <span class="brand-telemetry">[CADASTRO // NOVA SALA]</span>
+        </div>
+
+        <nav class="dock-links">
+            <a href="index.html" class="dock-link">Início</a>
+            <a href="listar_sala.html" class="dock-link active">Salas</a>
+            <a href="grade.html" class="dock-link">Grade</a>
+            <a href="tabela_cadastros.html" class="dock-link">Professores</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="listar_sala.html" class="btn-ghost">Voltar às Salas</a>
+        </div>
+    </header>
+
+    <!-- Side Drawer Menu -->
+    <aside id="side-menu">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="brand-logo">CLAEX<span>.</span></div>
+            <button class="close-menu btn-ghost" style="padding: 6px 12px; font-size: 1.2rem;">✕</button>
+        </div>
+        <div class="telemetry-tag">Navegação Rápida</div>
+        <a href="index.html" class="side-link">🏠 Início</a>
+        <a href="form_login.html?tipo=entrar" class="side-link">🔑 Acesso / Login</a>
+        <a href="listar_sala.html" class="side-link">📚 Salas & Turmas</a>
+        <a href="form_nova_sala.html" class="side-link">➕ Criar Nova Sala</a>
+        <a href="config_sala.html" class="side-link">⚙️ Configurações de Sala</a>
+        <a href="tabela_cadastros.html" class="side-link">👥 Painel de Professores</a>
+    </aside>
+    <div class="menu-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999;"></div>
+
+    <main style="padding: 30px 20px 80px;">
+        <form id="form_nova_sala" class="spotlight-card">
+            <div class="telemetry-tag">[CONFIGURADOR DE AMBIENTE]</div>
+            <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Cadastrar Nova Sala</h1>
+            <p style="margin-bottom: 28px; color: var(--text-secondary);">
+                Defina os parâmetros de temporização e associe as disciplinas e docentes para cálculo da grade.
+            </p>
+
+            <input type="hidden" id="id">
+            <input type="hidden" id="id_escola" value="26">
+
+            <article class="form-grid">
+                <div>
+                    <label>Nome da Sala / Turma:
+                        <input type="text" id="nome" placeholder="Ex: 3º Ano Ensino Médio A" required>
+                    </label>
+                </div>
+                <div>
+                    <label>Duração de uma Aula (minutos):
+                        <input type="number" id="duracao_aula" placeholder="Ex: 50" required>
+                    </label>
+                </div>
+                <div>
+                    <label>Duração do Intervalo (minutos):
+                        <input type="number" id="duracao_intervalo" placeholder="Ex: 20" required>
+                    </label>
+                </div>
+                <div>
+                    <label>Hora de Início das Aulas:
+                        <input type="time" id="inicio_aula" required>
+                    </label>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label>Quantidade de Aulas por Dia:
+                        <input type="number" id="quant_aulas" placeholder="Ex: 6" required>
+                    </label>
+                </div>
+            </article>
+
+            <div style="margin-top: 36px; border-top: 1px solid var(--border-glass); padding-top: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h3 style="font-size: 1.2rem;">Matérias & Docentes Alocados</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Adicione as disciplinas que serão ministradas nesta turma.</p>
+                    </div>
+                    <button type="button" class="btn-add-materia" onclick="addMateria()">
+                        + Adicionar Matéria
+                    </button>
+                </div>
+
+                <div id="aulas" style="margin-top: 16px;">
+                    <!-- Aulas adicionadas dinamicamente aqui -->
+                </div>
+            </div>
+
+            <button type="submit" class="submit" style="margin-top: 32px;">
+                ⚡ Criar Sala & Gerar Grade
+            </button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">CLAEX<span>.</span></div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="index.html">Início</a>
+                    <a href="listar_sala.html">Salas</a>
+                    <a href="grade.html">Grade de Horários</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 CLAEX. Todos os direitos reservados.</div>
+            <div class="footer-status">ONLINE // READY FOR SCHEDULE OPTIMIZATION</div>
+        </div>
+    </footer>
+
+    <script>
+        async function addMateria(){
+            try {
+                const buscaMaterias = await fetch("https://lolooo-production.up.railway.app/materias/listar");
+                const materias = await buscaMaterias.json();
+                
+                const buscaProfessores = await fetch("https://lolooo-production.up.railway.app/professores/listar");
+                const professores = await buscaProfessores.json();
+
+                let aulas = document.getElementById("aulas");
+                
+                aulas.insertAdjacentHTML('beforeend',`
+                <div class="aulas">
+                    <div>
+                        <label>Disciplina: 
+                            <select class="materia" required>
+                                <option value="" selected disabled>Selecione a matéria</option>
+                                ${materias.map(materia => `
+                                    <option value="${materia.id_materia}">${materia.nome_materia}</option>
+                                `).join('')}
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Professor Responsável: 
+                            <select class="professor">
+                                <option value="null">Selecione o professor</option>
+                                ${professores.map(professor => `
+                                    <option value="${professor.id_professor}">${professor.nome_professor}</option>
+                                `).join('')}
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                `);
+            } catch(e) {
+                alert("Erro ao buscar matérias ou professores no servidor.");
+            }
+        }
+
+        const api = "https://lolooo-production.up.railway.app/salas/salvar";
+        
+        document.getElementById("form_nova_sala").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const id = document.getElementById("id").value;
+            const submitBtn = document.querySelector("#form_nova_sala .submit");
+
+            const sala = {
+                nome_sala: document.getElementById("nome").value,
+                duracao_aula: document.getElementById("duracao_aula").value,
+                duracao_intervalo: document.getElementById("duracao_intervalo").value,
+                inicio_aula: document.getElementById("inicio_aula").value,
+                quant_aula: document.getElementById("quant_aulas").value,
+                escola: {
+                    id: document.getElementById("id_escola").value
+                }
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Gravando Sala & Gerando Grade...";
+
+            try {
+                if(id === ""){
+                    const response = await fetch(api, {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify(sala)
+                    });
+
+                    if(response.status === 200 || response.ok){
+                        let materias = [];
+                        let aulas = document.querySelectorAll(".aulas");
+                        aulas.forEach((aula) => {
+                            const matVal = aula.querySelector(".materia").value;
+                            const profVal = aula.querySelector(".professor").value;
+                            if (matVal) {
+                                materias.push({
+                                    id_materia: { id_materia: matVal },
+                                    id_professor: { id_professor: profVal }
+                                });
+                            }
+                        });
+
+                        const id_sala = await response.json();
+
+                        const responseGrade = await fetch(`https://lolooo-production.up.railway.app/grade/gerargrade/${id_sala.id_sala}`, {
+                            method: "POST",
+                            headers: { "Content-type": "application/json" },
+                            body: JSON.stringify(materias)
+                        });
+
+                        if(responseGrade.ok){
+                            alert("Sala e grade criadas com sucesso!");
+                            window.location.href = "listar_sala.html";
+                        } else{
+                            alert("Sala criada! Porém houve um aviso ao gerar a grade inicial.");
+                            window.location.href = "listar_sala.html";
+                        }
+                    } else {
+                        alert("Ocorreu um erro ao salvar a sala, verifique os dados e tente novamente.");
+                    }
+                }
+            } catch(error) {
+                console.error(error);
+                alert("Erro ao conectar com o servidor.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "⚡ Criar Sala & Gerar Grade";
+            }
+        });
+    </script>
+    <script src="js/webgl-background.js"></script>
+    <script src="js/unlumen-effects.js"></script>
+</body>
+</html>

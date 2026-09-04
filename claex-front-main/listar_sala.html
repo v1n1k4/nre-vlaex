@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAEX // Painel de Salas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Floating Dock Header -->
+    <header>
+        <div class="brand-container">
+            <div class="bars" id="menuToggle" aria-label="Abrir Menu">
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+                <div class="menu-bar"></div>
+            </div>
+            <a href="index.html" class="brand-logo">
+                CLAEX<span>.</span>
+            </a>
+            <span class="brand-telemetry">[SALAS // DASHBOARD]</span>
+        </div>
+
+        <nav class="dock-links">
+            <a href="index.html" class="dock-link">Início</a>
+            <a href="listar_sala.html" class="dock-link active">Salas</a>
+            <a href="grade.html" class="dock-link">Grade</a>
+            <a href="tabela_cadastros.html" class="dock-link">Professores</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="listar_sala.html">
+                <img style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--neon-lime); object-fit: cover;" 
+                     src="https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/197/2024/12/centro-paula-souza.jpg" 
+                     alt="Centro Paula Souza">
+            </a>
+        </div>
+    </header>
+
+    <!-- Side Drawer Menu -->
+    <aside id="side-menu">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="brand-logo">CLAEX<span>.</span></div>
+            <button class="close-menu btn-ghost" style="padding: 6px 12px; font-size: 1.2rem;">✕</button>
+        </div>
+        <div class="telemetry-tag">Navegação Rápida</div>
+        <a href="index.html" class="side-link">🏠 Início</a>
+        <a href="form_login.html?tipo=entrar" class="side-link">🔑 Acesso / Login</a>
+        <a href="listar_sala.html" class="side-link">📚 Salas & Turmas</a>
+        <a href="form_nova_sala.html" class="side-link">➕ Criar Nova Sala</a>
+        <a href="config_sala.html" class="side-link">⚙️ Configurações de Sala</a>
+        <a href="tabela_cadastros.html" class="side-link">👥 Painel de Professores</a>
+    </aside>
+    <div class="menu-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999;"></div>
+
+    <section id="painel">
+        <img src="https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/197/2024/12/centro-paula-souza.jpg" alt="Instituição">
+        <article>
+            <div class="telemetry-tag" style="margin-bottom: 6px;">UNIDADE CONECTADA</div>
+            <h1>Centro Paula Souza</h1>
+            <p style="display: flex; gap: 24px; margin-top: 6px; flex-wrap: wrap;">
+                <span>Professores Cadastrados: <strong style="color: var(--neon-lime);" id="prof-count">Carregando...</strong></span>
+                <span>Salas Ativas: <strong style="color: var(--neon-cyan);" id="sala-count">Carregando...</strong></span>
+            </p>
+        </article>
+    </section>
+
+    <main>
+        <div class="link_nova_sala">
+            <div>
+                <div class="telemetry-tag" style="margin-bottom: 4px;">[MATRIZ DE AMBIENTES]</div>
+                <h1>Salas de Aula Disponíveis</h1>
+            </div>
+            <a href="form_nova_sala.html">
+                <button class="btn-neon">+ Nova Sala</button>
+            </a>
+        </div>
+
+        <section id="salas_user">
+            <!-- As salas carregam dinamicamente aqui -->
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <p>Carregando salas do servidor...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">CLAEX<span>.</span></div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="index.html">Início</a>
+                    <a href="listar_sala.html">Salas</a>
+                    <a href="grade.html">Grade de Horários</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 CLAEX. Todos os direitos reservados.</div>
+            <div class="footer-status">ONLINE // RAILWAY API CONNECTED</div>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = "https://lolooo-production.up.railway.app";
+
+        async function listarSalas() {
+            const sect = document.getElementById("salas_user");
+            try {
+                const response = await fetch(`${API_URL}/salas/listar`);
+                const salas = await response.json();
+
+                sect.innerHTML = "";
+
+                if (!salas || salas.length === 0) {
+                    sect.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px dashed var(--border-card);">
+                            <p style="color: var(--text-secondary); margin-bottom: 16px;">Nenhuma sala cadastrada no momento.</p>
+                            <a href="form_nova_sala.html" class="btn-neon" style="display: inline-flex;">Cadastrar Primeira Sala</a>
+                        </div>
+                    `;
+                    document.getElementById("sala-count").textContent = "0";
+                    return;
+                }
+
+                document.getElementById("sala-count").textContent = salas.length;
+
+                salas.forEach((sala) => {
+                    sect.innerHTML += `
+                        <a href="grade.html?id=${sala.id_sala}" style="text-decoration: none;">
+                            <article class="caixa_sala spotlight-card">
+                                <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <span class="telemetry-tag" style="margin: 0; font-size: 0.65rem;">ID #${sala.id_sala}</span>
+                                    <span style="color: var(--neon-lime); font-size: 0.8rem; font-family: var(--font-mono);">ABRIR GRADE →</span>
+                                </div>
+                                <p>${sala.nome_sala}</p>
+                            </article>
+                        </a>
+                    `;
+                });
+
+                // Atualizar contagem de professores
+                try {
+                    const profRes = await fetch(`${API_URL}/professores/listar`);
+                    const profs = await profRes.json();
+                    document.getElementById("prof-count").textContent = profs.length || "0";
+                } catch(e) {
+                    document.getElementById("prof-count").textContent = "Ativo";
+                }
+
+            } catch (error) {
+                console.error("Erro ao listar salas:", error);
+                sect.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: rgba(255, 59, 48, 0.1); border-radius: var(--radius-md); border: 1px solid var(--neon-red);">
+                        <p style="color: #ff9999; margin-bottom: 8px;">Falha ao sincronizar salas com o servidor.</p>
+                        <small style="color: var(--text-muted); font-family: var(--font-mono);">${error.message}</small>
+                    </div>
+                `;
+            }
+        }
+
+        listarSalas();
+    </script>
+    <script src="js/webgl-background.js"></script>
+    <script src="js/unlumen-effects.js"></script>
+</body>
+</html>
